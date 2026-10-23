@@ -5,6 +5,9 @@ library(DT)
 library(ggplot2)
 library(plotly)
 
+
+#test with key 2490034, 490575, 5361846
+
 con <- dbConnect(duckdb(), "svh.duckdb", read_only = TRUE)
 onStop(function() dbDisconnect(con, shutdown = TRUE))
 

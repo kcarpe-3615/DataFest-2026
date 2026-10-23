@@ -5,6 +5,10 @@ library(ggplot2)
 library(plotly)
 library(dplyr)
 
+
+
+
+
 con <- dbConnect(duckdb(), "svh.duckdb", read_only = TRUE)
 onStop(function() dbDisconnect(con, shutdown = TRUE))
 
