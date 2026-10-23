@@ -21,3 +21,6 @@ duckdbscript1.R
 .DS_Store
 Thumbs.db
 desktop.ini
+
+# ---- RStudio Markdown preview output ----
+README.html

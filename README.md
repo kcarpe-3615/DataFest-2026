@@ -9,17 +9,48 @@ Do patients who screen positive for social needs, like housing instability, tran
 ## Key findings
 
 - **About 3x the ER visit rate.** After adjusting for age and number of chronic conditions, patients who screened positive for financial resource strain had **3.04 times** the ED visit rate of patients who screened negative (95% CI: 2.88–3.21). That effect was larger than any age group or chronic condition in the model.
-- **More preventable visits, even with regular primary care.** Positive screeners had a higher share of ED visits for preventable conditions at every level of primary care engagement, including patients seen by primary care within the last 30 days (12.5% vs. 10.9%).
+- **A larger share of preventable visits.** Positive screeners' ED visits were more often for conditions good primary care should prevent, at every level of primary care engagement, including patients seen by primary care within the last 30 days.
 
-![Adjusted incidence rate ratios](images/adjusted_rate_ratios.png)
-
-![Preventable ED visits by primary care engagement](images/preventable_visits_by_engagement.png)
+![Adjusted incidence rate ratios](applications/02_adjusted_analysis/adjusted_rate_ratios.png)
 
 ## Who we studied
 
 Every result is tied to a clearly defined cohort. The SQL funnel counts unique patients at each step, so the exclusions reconcile exactly: 61,453 approached − 603 who only declined = **60,850 in the study population**.
 
-![Cohort flow diagram](cohort_diagram.png)
+![Cohort flow diagram](cohort/cohort_diagram.png)
+
+## Interactive dashboards (R Shiny)
+
+Each dashboard lives in its own folder under [`applications/`](applications/), with its `app.R` and screenshots.
+
+| Folder | Question it answers |
+|---|---|
+| [`01_sdoh_ed_use`](applications/01_sdoh_ed_use/) | Do patients who screen positive for social needs use the ED more? Rates, risk ratios, and significance tests across domains |
+| [`02_adjusted_analysis`](applications/02_adjusted_analysis/) | Does the effect survive controls? Stratified rate ratios, a negative binomial forest plot, and a "what this analysis cannot do" section |
+| [`03_preventable_visits`](applications/03_preventable_visits/) | How much of the extra ED use is preventable, and which conditions drive it? |
+| [`04_care_gaps`](applications/04_care_gaps/) | How long had patients gone without primary care before each ED visit, and does a longer gap predict preventable visits? |
+| [`05_roi_calculator`](applications/05_roi_calculator/) | Could investing in community health workers for these patients pay off? Adjustable assumptions, sensitivity analysis, and cited sources |
+| [`06_rural_vs_urban`](applications/06_rural_vs_urban/) | How do rural and urban patients' care journeys differ? |
+| [`07_cancer_screening`](applications/07_cancer_screening/) | How do cancer screening rates differ by sex and age group? |
+| [`08_patient_journey`](applications/08_patient_journey/) | Patient journey viewer: one patient's encounters, diagnoses, and screenings on a timeline (no screenshots, to protect patient privacy) |
+
+### Preventable ED visits
+
+![Preventable visits dashboard](applications/03_preventable_visits/screenshot_1.png)
+
+![Conditions driving the gap](applications/03_preventable_visits/screenshot_2.png)
+
+### Care gaps before the ED
+
+![Care gaps dashboard](applications/04_care_gaps/screenshot_1.png)
+
+![Does the gap predict preventable visits?](applications/04_care_gaps/screenshot_2.png)
+
+### ROI calculator
+
+![ROI calculator](applications/05_roi_calculator/screenshot_1.png)
+
+![Sensitivity analysis and evidence base](applications/05_roi_calculator/screenshot_2.png)
 
 ## Methods
 
@@ -40,28 +71,22 @@ Every result is tied to a clearly defined cohort. The SQL funnel counts unique p
 - Stratified rate ratios by age band and comorbidity burden, with approximate 95% confidence intervals, to check that the effect holds within each subgroup.
 - Preventable visits defined using ambulatory care sensitive conditions (ACSC), based on AHRQ Prevention Quality Indicators.
 
-## Interactive dashboards (R Shiny)
+## Repository layout
 
-| File | Question it answers |
-|---|---|
-| `sdoh_ed_app.R` | Do patients who screen positive for social needs use the ED more? Rates, risk ratios, and significance tests across domains |
-| `adjusted_analysis_app.R` | Does the effect survive controls? Stratified rate ratios, a negative binomial forest plot, and a "what this analysis cannot do" section |
-| `acsc_dashboard_app.R` | How much of the extra ED use is preventable, and which conditions drive it? |
-| `gare_gap_app.R` | How long had patients gone without primary care before each ED visit, and does a longer gap predict preventable visits? |
-| `roi_calculator_app.R` | Could investing in community health workers for these patients pay off? Adjustable assumptions, sensitivity analysis, and cited sources |
-| `rural_comparison_app.R` | How do rural and urban patients' care journeys differ? |
-| `screening_app.R` | How do cancer screening rates differ by sex and age group? |
-| `app.R` | Patient journey viewer: one patient's encounters, diagnoses, and screenings on a timeline |
-
-Supporting scripts: `build_database.R` (creates the DuckDB database), `cohort_queries.R` (cohort funnel and per-domain counts), `cohort_diagram.R` (draws the cohort flow diagram in ggplot2).
+```
+├── applications/          one folder per Shiny dashboard (app.R + screenshots)
+├── cohort/                cohort SQL queries and the cohort flow diagram
+├── presentation/          competition slides
+└── build_database.R       loads the DataFest CSVs into svh.duckdb
+```
 
 ## Running it
 
 The DataFest data was provided for the competition only, so **no patient data is included in this repository**. With access to the data:
 
-1. Place the DataFest CSV files in this folder.
-2. Run `build_database.R` to create `svh.duckdb`.
-3. Launch any dashboard, for example `shiny::runApp("sdoh_ed_app.R")`.
+1. Place the DataFest CSV files in the repository root.
+2. Run `build_database.R` from the repository root to create `svh.duckdb`.
+3. Launch any dashboard from the repository root, for example `shiny::runApp("applications/05_roi_calculator")`.
 
 R packages: `shiny`, `duckdb`, `DBI`, `dplyr`, `tidyr`, `ggplot2`, `plotly`, `DT`, `MASS`, `broom`.
 
