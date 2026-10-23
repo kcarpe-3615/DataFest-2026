@@ -21,7 +21,7 @@ Every result is tied to a clearly defined cohort. The SQL funnel counts unique p
 
 ## Interactive dashboards (R Shiny)
 
-Each dashboard lives in its own folder under [`applications/`](applications/), with its `app.R` and screenshots.
+Each dashboard lives in its own folder under [`applications/`](applications/), with its app script and screenshots.
 
 | Folder | Question it answers |
 |---|---|
@@ -74,7 +74,7 @@ Each dashboard lives in its own folder under [`applications/`](applications/), w
 ## Repository layout
 
 ```
-├── applications/          one folder per Shiny dashboard (app.R + screenshots)
+├── applications/          one folder per Shiny dashboard (app script + screenshots)
 ├── cohort/                cohort SQL queries and the cohort flow diagram
 ├── presentation/          competition slides
 └── build_database.R       loads the DataFest CSVs into svh.duckdb
@@ -86,7 +86,7 @@ The DataFest data was provided for the competition only, so **no patient data is
 
 1. Place the DataFest CSV files in the repository root.
 2. Run `build_database.R` from the repository root to create `svh.duckdb`.
-3. Launch any dashboard from the repository root, for example `shiny::runApp("applications/05_roi_calculator")`.
+3. Launch any dashboard from the repository root, for example `shiny::runApp("applications/05_roi_calculator/roi_calculator_app.R")`, or open the file in RStudio and click **Run App**.
 
 R packages: `shiny`, `duckdb`, `DBI`, `dplyr`, `tidyr`, `ggplot2`, `plotly`, `DT`, `MASS`, `broom`.
 
