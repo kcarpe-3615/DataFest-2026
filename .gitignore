@@ -1,0 +1,23 @@
+# ---- DataFest patient data: never commit ----
+# The hospital records are provided for the competition only and are too large for GitHub.
+*.csv
+*.xlsx
+*.duckdb
+*.duckdb.wal
+2026-ASA-DataFest-Data-Files/
+__2026-ASA-DataFest-Data-Files/
+___All_Errors.txt
+
+# ---- R session files (can contain loaded patient data) ----
+.RData
+.RDataTmp*
+.Rhistory
+.Rproj.user/
+
+# ---- Superseded scratch script (cleaned version: build_database.R) ----
+duckdbscript1.R
+
+# ---- OS clutter ----
+.DS_Store
+Thumbs.db
+desktop.ini
